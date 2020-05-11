@@ -59,7 +59,7 @@
 		"enzyme-adapter-react-16": "^1.15.2",
 		"enzyme-to-json": "^3.4.4",
 		"prettier": "^2.0.2",
-		"sort-package-json": "^1.40.0",
+		"sort-package-json": "^1.42.2",
 		"ts-jest": "^25.3.1"
 	}
 }
