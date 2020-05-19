@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: hades-service
+  name: chimerax-app
 spec:
   selector:
-    deployment: hades-service-deployment
+    deployment: chimerax-app
   type: LoadBalancer
   ports:
   - protocol: TCP
