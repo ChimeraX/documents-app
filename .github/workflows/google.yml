@@ -37,10 +37,10 @@ jobs:
         # via gcloud command-line tool.
         gcloud auth configure-docker
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build jar
-      run: ./gradlew bootJar
+    - name: Install dependencies
+      run: npm install --silent
+    - name: Build folder
+      run: npm run build
 
     - name: Build docker image
       run: |
