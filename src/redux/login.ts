@@ -5,10 +5,11 @@ import { AxiosResponse } from 'axios';
 import { Authentication } from '../model/Authentication';
 import { setAuth } from './user';
 import { Action } from 'redux';
+import Error from './Error';
 
-export interface LoginError {
-    cause: 'username' | 'password' | 'server';
-    message: string;
+type LoginErrorCause = 'email' | 'password' | 'server';
+
+export interface LoginError extends Error<LoginErrorCause> {
 }
 
 export interface LoginAction extends Action {
@@ -40,10 +41,10 @@ export const doLogin = (credentials: Credentials) => {
             const message: string = error.response.data.message;
             let cause = 'server';
             if (message.includes('username')) {
-                cause = 'username'
+                cause = 'email';
             }
             if (message.includes('password')) {
-                cause = 'password'
+                cause = 'password';
             }
             dispatch(setError({
                 cause,

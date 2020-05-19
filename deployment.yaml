@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chimerax-app
+  labels:
+    app: chimerax-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chimerax-app
+  template:
+    metadata:
+      labels:
+        app: chimerax-app
+    spec:
+      containers:
+      - name: chimerax-app-container
+        image: gcr.io/chimera-x/chimerax-app
+        ports:
+        - containerPort: 5000

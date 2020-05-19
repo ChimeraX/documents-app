@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import PasswordField from './PasswordField';
 import FlexGrow from '@chimerax/common-web/lib/widgets/FlexGrow';
-import { LoginError } from '../redux/user';
+import { LoginError } from '../redux/login';
 import ChimeraXAppTheme from '../theming/ChimeraXAppTheme';
 import Credentials from '../model/Credentials';
 
@@ -26,12 +26,16 @@ const useStyles = makeStyles((theme: ChimeraXAppTheme) => createStyles({
             backgroundColor: theme.palette.secondary.light,
         },
     },
+    link: {
+        padding: '0 0 128px',
+        backgroundColor: 'transparent',
+    },
 }));
 
 
 export interface LoginProperties {
-    error?: LoginError;
     onSubmit: (credentials: Credentials) => void;
+    error?: LoginError;
 }
 
 const Login: React.FC<LoginProperties> = (properties) => {
@@ -39,7 +43,7 @@ const Login: React.FC<LoginProperties> = (properties) => {
 
     const { onSubmit } = properties;
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(properties.error);
 
@@ -47,8 +51,8 @@ const Login: React.FC<LoginProperties> = (properties) => {
         setError(properties.error);
     }, [properties.error]);
 
-    const handleChangeUsername = (event: any) => {
-        setUsername(event.target.value);
+    const handleChangeEmail = (event: any) => {
+        setEmail(event.target.value);
         setError(undefined);
     };
 
@@ -58,19 +62,20 @@ const Login: React.FC<LoginProperties> = (properties) => {
     };
 
     const handleSubmit = () => {
-        onSubmit({ username, password });
+        onSubmit({ email, password });
     };
 
     return (
         <>
             <form className={classes.form}>
                 <TextField
-                    onChange={handleChangeUsername}
+                    onChange={handleChangeEmail}
                     label={'Email'}
                     variant={'outlined'}
                     margin={'normal'}
-                    error={error?.cause === 'username'}
-                    helperText={error?.cause === 'username' ? error.message : undefined}
+                    error={error?.cause === 'email'}
+                    helperText={error?.cause === 'email' ? error.message : undefined}
+                    required
                     fullWidth/>
                 <PasswordField
                     onChange={handleChangePassword}
@@ -79,6 +84,7 @@ const Login: React.FC<LoginProperties> = (properties) => {
                     margin={'normal'}
                     error={error?.cause === 'password'}
                     helperText={error?.cause === 'password' ? error.message : undefined}
+                    required
                     fullWidth
                 />
                 <Button
@@ -92,7 +98,7 @@ const Login: React.FC<LoginProperties> = (properties) => {
             </form>
             <Divider flexItem/>
             <FlexGrow/>
-            <Grid container style={{ backgroundColor: 'transparent' }} spacing={5}>
+            <Grid container className={classes.link} spacing={5}>
                 <Grid item xs>
                     <Link component={RouterLink} to={'/recover'} underline={'none'}>
                         {'Forgot password?'}

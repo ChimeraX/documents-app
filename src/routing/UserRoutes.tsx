@@ -8,7 +8,7 @@ const UserRoutes = () => {
     return (
         <Main>
             <Route path="/" exact component={HomePage}/>
-            <Redirect to="/"/>
+            <Redirect path="/**" to="/"/>
         </Main>
     );
 };

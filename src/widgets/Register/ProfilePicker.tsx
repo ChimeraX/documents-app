@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Icon } from '@material-ui/core';
@@ -10,12 +10,12 @@ const useStyles = makeStyles((theme: ChimeraXAppTheme) => {
         root: {
             display: 'flex',
         },
+        spacer: {
+            padding: '8px',
+        },
         wrapper: {
-            margin: 0,
-            padding: 0,
-            position: 'relative',
-            left: '50%',
-            transform: 'translate(-50%, 0)'
+            display: 'flex',
+            alignItems: 'center',
         },
         profilePicture: {
             height: '160px',
@@ -35,16 +35,22 @@ const useStyles = makeStyles((theme: ChimeraXAppTheme) => {
 
 export interface ProfilePickerProperties {
     onUpload: (document: Document) => void;
+    data?: Document;
 }
-
 
 const ProfilePicker: React.FC<ProfilePickerProperties> = (properties) => {
 
-    const { onUpload } = properties;
+    const { onUpload,data } = properties;
 
     const classes = useStyles();
 
-    const [picture, setPicture] = useState<Document | null>(null);
+    const [picture, setPicture] = useState<Document | undefined>(data);
+
+    useEffect(() => {
+        if (picture) {
+            onUpload(picture);
+        }
+    }, [picture, onUpload]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files: FileList = event.target.files!!;
@@ -59,7 +65,6 @@ const ProfilePicker: React.FC<ProfilePickerProperties> = (properties) => {
             setPicture({
                 name, type, size, data,
             });
-            onUpload(picture!!);
         };
     };
 
@@ -98,11 +103,15 @@ const ProfilePicker: React.FC<ProfilePickerProperties> = (properties) => {
             </div>
         );
     };
+
     return (
         <div className={classes.root}>
-            <div className={classes.wrapper}>
-                {picture ? <ProfileImage/> : <ProfileSelector/>}
-            </div>
+            {picture ?
+                <div className={classes.wrapper}>
+                    <ProfileImage/>
+                    <div style={{ padding: '8px' }}/>
+                    <ProfileSelector/>
+                </div> : <ProfileSelector/>}
         </div>
     );
 };

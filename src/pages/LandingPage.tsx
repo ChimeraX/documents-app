@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: ChimeraXAppTheme) => createStyles({
         },
     },
     paper: {
-        padding: '128px 100px',
+        padding: '128px 100px 0',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

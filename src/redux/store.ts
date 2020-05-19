@@ -5,9 +5,10 @@ import user from './user';
 import login from './login';
 import authorize from './authorize';
 import client from './client';
+import register from './register';
 
 const reducer = combineReducers({
-    user, login, authorize, client
+    user, login, authorize, client, register
 });
 
 const loggerMiddleware = createLogger();

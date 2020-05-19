@@ -5,21 +5,14 @@ import restClient from '../rest/restClient';
 import { AxiosResponse } from 'axios';
 import { getCookies } from '@chimerax/common-web/lib/util/cookies';
 
-export interface LoginError {
-    cause: 'username' | 'password' | 'server';
-    message: string;
-}
-
 export interface UserAction extends Action {
     user?: User;
     auth?: string;
-    error?: LoginError;
 }
 
 export interface UserState {
     user?: User;
     auth?: string;
-    error?: LoginError;
 }
 
 const initial: UserState = {

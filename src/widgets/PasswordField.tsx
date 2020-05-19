@@ -12,9 +12,8 @@ const PasswordField: React.FC<TextFieldProps> = (props) => {
                 endAdornment: <InputAdornment position="end">
                     <IconButton
                         onClick={() => setVisible(!visible)}
-                        onMouseDown={() => console.log('onMouseDown')}
                         edge="end">
-                        {visible ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}
+                        <Icon>{visible ? 'visibility' : 'visibility_off'}</Icon>
                     </IconButton>
                 </InputAdornment>,
             }}
