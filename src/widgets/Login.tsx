@@ -62,7 +62,7 @@ const Login: React.FC<LoginProperties> = (properties) => {
     };
 
     const handleSubmit = () => {
-        onSubmit({ email, password });
+        onSubmit({ email: email.trim(), password });
     };
 
     return (
