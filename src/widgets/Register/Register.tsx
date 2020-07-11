@@ -6,6 +6,7 @@ import Profile from '../../model/Profile';
 import ProfileForm from './ProfileForm';
 import { ProfileFormError, RegisterError, UserFormError } from '../../redux/register';
 import { validCredentialsObject, validProfileObject } from './Validation';
+import CodeForm from './CodeForm';
 
 export interface RegisterProperties {
     onSubmit: (registration: Registration) => void;
@@ -24,8 +25,9 @@ const Register: React.FC<RegisterProperties> = (properties) => {
 
     const [credentials, setCredentials] = useState<Credentials | undefined>(undefined);
     const [profile, setProfile] = useState<Profile | undefined>(undefined);
+    const [code, setCode] = useState<string | undefined>(undefined);
     const [error, setError] = useState(properties.error);
-    const [active, setActive] = useState<'user' | 'profile'>('user');
+    const [active, setActive] = useState<'user' | 'profile' | 'code'>('user');
     const [wentBack, setWentBack] = useState<boolean>(false);
 
     useEffect(() => {
@@ -45,9 +47,10 @@ const Register: React.FC<RegisterProperties> = (properties) => {
             onSubmit({
                 ...credentials,
                 ...profile,
+                code,
             });
         }
-    }, [credentials, profile, wentBack, onSubmit]);
+    }, [credentials, profile, code, wentBack, onSubmit]);
 
     const resetError = () => setError(undefined);
 
@@ -59,6 +62,12 @@ const Register: React.FC<RegisterProperties> = (properties) => {
 
     const handleProfile = (data: Profile) => {
         setProfile(data);
+        setActive('code');
+        resetError();
+    };
+
+    const handleCode = (data: string) => {
+        setCode(data);
         resetError();
     };
 
@@ -75,7 +84,7 @@ const Register: React.FC<RegisterProperties> = (properties) => {
                 data={credentials}
                 error={error?.childError as UserFormError}/>
         );
-    } else {
+    } else if (active === 'profile') {
         return (
             <ProfileForm
                 onSubmit={handleProfile}
@@ -83,8 +92,11 @@ const Register: React.FC<RegisterProperties> = (properties) => {
                 goBack={goFromProfileToUser}
                 error={error?.childError as ProfileFormError}/>
         );
+    } else {
+        return (
+            <CodeForm onSubmit={handleCode}/>
+        );
     }
-
 };
 
 export default Register;

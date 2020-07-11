@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Button,
-    createStyles, Divider,
-    Grid,
-    Link,
-    TextField,
-} from '@material-ui/core';
+import { Button, createStyles, Divider, Grid, Link, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import PasswordField from './PasswordField';
@@ -38,6 +32,16 @@ export interface LoginProperties {
     error?: LoginError;
 }
 
+function valid(str: string) {
+    let result = true;
+    if (str.includes('..')) {
+        result = false;
+    } else if (/!#\$%\^&\*-\+=/.test(str)) {
+        result = false;
+    }
+    return result;
+}
+
 const Login: React.FC<LoginProperties> = (properties) => {
     const classes = useStyles();
 
@@ -53,7 +57,12 @@ const Login: React.FC<LoginProperties> = (properties) => {
 
     const handleChangeEmail = (event: any) => {
         setEmail(event.target.value);
-        setError(undefined);
+        if (valid(email)) {
+            setError(undefined);
+        }
+        else {
+            setError({cause: 'email', message: 'Invalid characters'})
+        }
     };
 
     const handleChangePassword = (event: any) => {

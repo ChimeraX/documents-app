@@ -4,6 +4,7 @@ import { LoginState } from './login';
 import { AuthorizeState } from './authorize';
 import { ClientState } from './client';
 import { RegisterState } from './register';
+import { FolderState } from './folder';
 
 export default interface ChimeraXAppState extends ChimeraXState {
     user: UserState;
@@ -11,4 +12,5 @@ export default interface ChimeraXAppState extends ChimeraXState {
     authorize: AuthorizeState;
     client: ClientState;
     register: RegisterState;
+    folder: FolderState;
 }

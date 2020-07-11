@@ -4,6 +4,7 @@ import React from 'react';
 import Login from '../components/Login';
 import Register from '../components/Register';
 import Recover from '../components/Recover';
+import AuthorizePage from '../pages/AuthorizePage';
 
 const PublicRoutes = () => {
     return (

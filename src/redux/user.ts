@@ -7,16 +7,18 @@ import { getCookies } from '@chimerax/common-web/lib/util/cookies';
 
 export interface UserAction extends Action {
     user?: User;
-    auth?: string;
+    authenticated?: boolean;
 }
 
 export interface UserState {
     user?: User;
-    auth?: string;
+    authenticated?: boolean;
 }
 
+const token = getCookies().token;
+
 const initial: UserState = {
-    auth: getCookies().token,
+    authenticated: token !== undefined,
 };
 
 const SET_USER = 'SET_USER';
@@ -26,24 +28,35 @@ export const setUser = (user: User) => ({
 });
 
 const SET_AUTH = 'SET_AUTH';
-export const setAuth = (auth: string) => ({
+export const setAuthenticated = (authenticated: boolean) => ({
     type: SET_AUTH,
-    auth,
+    authenticated,
 });
 
 export const fetchUserInfo = () => {
     return (dispatch: any) => {
         return restClient.get(endpoints.userInfoURL)
             .then((response: AxiosResponse<User>) => {
-            dispatch(setUser(response.data));
-        });
+                dispatch(setUser(response.data));
+            });
+    };
+};
+
+export const isAuthenticated = () => {
+    return (dispatch: any) => {
+        return restClient.get(endpoints.isAuthenticatedURL)
+            .then((response: any) => {
+                if (response.status === 200) {
+                    dispatch(setAuthenticated(true));
+                }
+            });
     };
 };
 
 const user = (state: UserState = initial, action: UserAction) => {
     switch (action.type) {
         case SET_AUTH:
-            return { ...state, auth: action.auth };
+            return { ...state, authenticated: action.authenticated };
         case SET_USER:
             return { ...state, user: action.user };
         default:

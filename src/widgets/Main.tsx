@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: ChimeraXAppTheme) => {
 			backgroundPosition: 'center center',
 			backgroundAttachment: 'fixed',
 			backgroundSize: 'cover',
-			backgroundImage: 'url(\'./images/red_car.jpg\')',
+			backgroundColor: theme.palette.primary.light,
 		},
 	});
 });

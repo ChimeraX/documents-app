@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ChimeraXAppState from '../redux/ChimeraXAppState';
-import Register  from '../widgets/Register';
+import Register from '../widgets/Register';
 import Credentials from '../model/Credentials';
 import { doRegister } from '../redux/register';
 

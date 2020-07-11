@@ -1,16 +1,12 @@
 import React from 'react';
 import Page from '@chimerax/common-web/lib/widgets/Page';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import {
-    CssBaseline,
-    Paper,
-} from '@material-ui/core';
+import { CssBaseline, Paper } from '@material-ui/core';
 import ChimeraXAppTheme from '../theming/ChimeraXAppTheme';
 import AuthorizationForm from '../components/Authorization';
 import UserLogo from '../components/Authorization/UserLogo';
 import ClientLogo from '../components/Authorization/ClientLogo';
 import { useQuery } from '@chimerax/common-web/lib/util/hooks';
-import { Redirect } from 'react-router-dom';
 import Scope from '../model/Scope';
 import mapToScopes from '../rest/scopeMapping';
 import ChimeraXAppState from '../redux/ChimeraXAppState';
@@ -72,10 +68,14 @@ const AuthorizePage: React.FC<AuthorizePageProperties> = (properties) => {
     const classes = useStyles();
 
     const search = useQuery();
-
+    /*
     if (!isValid(search)) {
+        alert('error');
         return (<Redirect to="/"/>);
     }
+
+     */
+
 
     const clientId = search.get('client')!!;
 

@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Button,
-    createStyles,
-    TextField,
-} from '@material-ui/core';
+import { Button, createStyles, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ChimeraXAppTheme from '../theming/ChimeraXAppTheme';
 

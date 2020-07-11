@@ -4,10 +4,16 @@ import * as endpoints from '../rest/endpoints';
 import { AxiosResponse } from 'axios';
 import { Action } from 'redux';
 import Error from './Error';
+import Registration from '../model/Registration';
 
 type UserFormErrorCause = 'email' | 'password' | 'confirmPassword';
 type ProfileFormErrorCause = 'profilePicture' | 'firstName' | 'lastName';
-type RegisterErrorCause = UserFormErrorCause | ProfileFormErrorCause | 'user' | 'profile';
+type CodeFormErrorCause = 'code';
+type RegisterErrorCause = UserFormErrorCause
+    | ProfileFormErrorCause
+    | CodeFormErrorCause
+    | 'user'
+    | 'profile';
 
 export interface UserFormError extends Error<UserFormErrorCause> {
 }
@@ -15,8 +21,11 @@ export interface UserFormError extends Error<UserFormErrorCause> {
 export interface ProfileFormError extends Error<ProfileFormErrorCause> {
 }
 
+export interface CodeFormError extends Error<CodeFormErrorCause> {
+}
+
 export interface RegisterError extends Error<RegisterErrorCause> {
-    childError?: UserFormError | ProfileFormError;
+    childError?: UserFormError | ProfileFormError | CodeFormError;
 }
 
 export interface RegisterAction extends Action {
@@ -25,6 +34,7 @@ export interface RegisterAction extends Action {
 
 export interface RegisterState {
     error?: RegisterError;
+    registration?: Registration;
 }
 
 const initialState = {};
@@ -40,7 +50,9 @@ export const doRegister = (credentials: Credentials) => {
         return restClient.post(endpoints.registerURL, credentials).then(
             (response: AxiosResponse<{}>) => {
             },
-        );
+        ).catch(() => {
+            setError({ cause: 'profile', message: 'Something unexpected happened' });
+        });
     };
 };
 

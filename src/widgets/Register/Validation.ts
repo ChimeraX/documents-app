@@ -28,3 +28,13 @@ export function validProfile(firstName: string = '',
         && lastName !== ''
         && profilePicture !== undefined;
 }
+
+export function valid(str: string) {
+    let result = true;
+    if (str.includes('..')) {
+        result = false;
+    } else if (/!#\$%\^&\*-\+=/.test(str)) {
+        result = false;
+    }
+    return result;
+}

@@ -4,7 +4,7 @@ import ChimeraXAppState from '../redux/ChimeraXAppState';
 
 const mapStateToProps = (state: ChimeraXAppState, properties?: Partial<TitleProperties>) => {
     return {
-        icon: 'eco',
+        icon: 'bubble_chart',
         text: 'Chimera-X',
     };
 };
